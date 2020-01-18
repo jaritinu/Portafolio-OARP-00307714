@@ -6,10 +6,11 @@ float mediana (int *p, int size);
 int main (){
     int n=0;
     int prueba [5]={1,2,3,4,5};
+    int *vector;
     cout<<"Programa para calcular la mediana"<<endl;
     cout<<"Digite el numero de numeros a ingresar"<<endl;
     cin>>n;
-    int vector[n];
+    vector=new int[n];
     cout<<"Ingrese los numeros en orden "<<endl;
     for(int i=0;i<n;i++){
         cout<<"Digite un numero: "<<endl;
