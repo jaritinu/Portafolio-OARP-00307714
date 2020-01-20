@@ -6,8 +6,8 @@ struct continente{
     string name;
     string country[5];
     string capital[5];
-    int poblation[5];
-    float averageAge[5];
+    double poblation[5];
+    double averageAge[5];
 };
 //typedef struct continente continet;
 
@@ -69,9 +69,9 @@ void entrada(continente *p){
 
 
 void poblacionTotal(continente *p){
-   int sumPoblation = 0;
+   long int sumPoblation = 0;
    for(int i = 0; i < 5; i++){
-    sumPoblation = sumPoblation + p->poblation[i];        
+        sumPoblation = sumPoblation + p->poblation[i];        
     }
     cout << "La poblacion total del continente es: " << sumPoblation <<endl;
 }
@@ -84,11 +84,11 @@ void capitalMayor(continente *p){
             pos=i;
         }      
     }
-    cout << "La capital con mayor poblacion del continente es: " << p->name[pos] <<endl;
+    cout << "La capital con mayor poblacion del continente es: " << p->country[pos] <<endl;
 }
 void promedioContinente(continente *p){
-   int sumAge = 0;
-   float continentAge;
+   double sumAge = 0;
+   double continentAge;
     for(int i = 1; i < 5; i++){
         sumAge = sumAge + p->poblation[i];
     }
