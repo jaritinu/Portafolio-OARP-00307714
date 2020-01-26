@@ -8,7 +8,12 @@ struct brick{
     string material;
 };
 
-typedef struct brick * brickStack;
+struct nodeBrick{
+    brick onebrick;
+    nodeBrick *next;
+};
+
+typedef struct nodeBrick *brickStack;
 
 void initialize(brickStack *s);
 bool empty(brickStack *s);
@@ -17,13 +22,13 @@ brick pop(brickStack *s);
 brick top(brickStack *s);
 
 int main(void){
-    brick *brickStack;
-    initialize(&brickStack);
+    brickStack bStack;
+    initialize(&bStack);
    
     bool continuar = true;
     do{
         char opcion = 's';
-       // cout << "\nCantidad de ladrillos actual: " << brickStack.size();
+        cout << "\nCantidad de ladrillos actual: " << stackSize(&bStack);
         cout << "\nDesea apilar otro ladrillo? (s/n): ";
         cin >> opcion; cin.ignore();
        
@@ -31,7 +36,7 @@ int main(void){
             brick oneBrick;
             cout << "tipo: ";   getline(cin, oneBrick.brickType);
             cout << "Material: ";   getline(cin, oneBrick.material);
-            push(&brickStack, oneBrick);
+            push(&bStack, oneBrick);
         }
         else if(opcion == 'n')
             continuar = false;
@@ -41,21 +46,17 @@ int main(void){
    
     // 3) Desapilando ladrillos -----------------------
     cout << "\nDesapilando ladrillos..." << endl;
-    while(!empty(&brickStack)){
-        // Obtener el ladrillo de encima (sin sacarlo de la pila)
-        brick topBrick = top(&brickStack);
+    while(!empty(&bStack)){
+        brick topBrick = top(&bStack);
         cout << "Ladrillo [" << topBrick.brickType;
         cout << ", " << topBrick.material << "]\n";
        
-        // Sacando ladrillo de la pila
-        pop(&brickStack);
+        pop(&bStack);
 
     }
     cout << "Pila de ladrillos vacia." << endl;
-
     return 0;
 }
-
 
 void initialize(brickStack *s){
     *s = NULL;
@@ -65,61 +66,52 @@ bool empty(brickStack *s){
     return *s == NULL;
 }
 
-void push(brickStack *s, float e){
-    struct brick *oneBrick;
-    oneBrick = new brick[1];
-    oneBrick->elemento = e;
-    oneBrick->siguiente = *s;
+void push(brickStack *s, brick e){
+    nodeBrick *oneBrick = new nodeBrick;
+    oneBrick->onebrick = e;
+    oneBrick->next = *s;
    
-    *s = unNodo;
-    //cout << "Curiosidad: " << &unNodo << "\t";
-    cout << "Nueva direccion: " << *s << endl;
+    *s = oneBrick;
 }
 
 brick pop(brickStack *s){
     if(!empty(s)){
-        struct nodo *unNodo = *s;
-        float e = (*s)->elemento;
-        *s = (*s)->siguiente;
-        delete(unNodo);
-        cout << "Nueva direccion: " << *s << endl;
+        nodeBrick *oneBrick = *s;
+        brick e = (*s)->onebrick;
+        *s = (*s)->next;
+        delete(oneBrick);
         return e;
     }
     else{
-        cout << "Underflow!" << endl;
-        return -1;
+        return {{" "},{" "}};
     }
 }
 
 brick top(brickStack *s){
     if(!empty(s)){
-        brick e = (*s)->brickType;
+        brick e = (*s)->onebrick;
         return e;
     }
     else{
-        cout << "Underflow!" << endl;
-        return -1;
+        return {{" "},{" "}};
     }
 }
 
 int stackSize(brickStack *s){
-int countNodes=0;
-brick *auxBrickStack;
-brick auxBrick;
-while(!empty(s)){
-        // Sacando ladrillo de la pila
-        auxBrick=pop(s);
-        push(&auxBrickStack,auxBrick);
-       
-        countNodes++;
-    }
-    while(!empty(&auxBrickStack)){
-        // Sacando ladrillo de la pila
-        auxBrick=pop(&auxBrickStack);
-        push(s,auxBrick);
-       
-        countNodes++;
-    }
-   
-return countNodes;
+    int countNodes=0;
+    brickStack auxStack;
+    brick auxBrick;
+    while(!empty(s)){
+            auxBrick=pop(s);
+            push(&auxStack,auxBrick);
+        
+            countNodes++;
+        }
+        while(!empty(&auxStack)){
+            auxBrick=pop(&auxStack);
+            push(s,auxBrick);
+        
+            countNodes++;
+        }    
+    return countNodes;
 }

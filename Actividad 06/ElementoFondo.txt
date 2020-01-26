@@ -1,0 +1,19 @@
+int fondopila (Pila s){
+    queue <int> colaAuxiliar;
+    int fondo, temp;
+    bool bandera=true;
+    while(!s.empty()){
+        fondo = s.front();
+        colaAuxiliar.pop();
+        flag = false;
+    }
+    while(!colaAuxiliar.empty()){
+        temp =colaAuxiliar.front();
+        colaAuxiliar.pop();
+        s.push(temp);
+    }
+    if(flag == true)
+        return -1;
+    else
+        return fondo;
+}

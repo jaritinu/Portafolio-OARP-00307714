@@ -12,7 +12,6 @@ struct actividad{
 
 void agregar(), borrar(), borrarTodas(), verTodas();
 
-
 queue <actividad> colaActividades;
 
 int main()
@@ -44,7 +43,7 @@ void agregar(){
     actividad nuevo;
     cout << "\nTitulo de la actividad: "; getline(cin,nuevo.titulo);
     cout << "\nHora: "; getline(cin, nuevo.hora);
-    cout << "\nDracion: "; cin >> nuevo.duracion;
+    cout << "\nDuracion: "; cin >> nuevo.duracion;
    
     colaActividades.push(nuevo);
 }
@@ -67,7 +66,7 @@ void verTodas(){
         temp = colaActividades.front();
         cout << "\nTitulo de la actividad: "<< temp.titulo <<endl;
         cout << "\nHora: "<< temp.hora << endl;
-        cout << "\nDracion: "<< temp.duracion << endl;
+        cout << "\nDuracion: "<< temp.duracion << endl;
         colaAux.push(temp);
         colaActividades.pop();
         flag = false;
@@ -78,6 +77,5 @@ void verTodas(){
         colaActividades.push(temp);
     }
     if(flag==true)
-        cout << "\nSin actividades" << endl;
-   
+        cout << "\nSin actividades" << endl; 
 }
